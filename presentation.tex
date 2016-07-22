@@ -1,5 +1,6 @@
 \documentclass{beamer}
 
+\usepackage[dvipsnames]{xcolor}
 \usepackage[main=english,finnish]{babel}
 \usepackage{cmbright}
 \usepackage{fontspec}
@@ -7,13 +8,13 @@
 \usepackage{pifont}
 \usepackage{dot2texi}
 \usepackage{amsmath}
+\usepackage{amssymb}
 
 \newsavebox{\mysavebox}
 \newlength{\myrest}
 
 \DeclareMathOperator*{\argmax}{arg\,max}
-\newcommand{\cmark}{\textcolor{red}{\ding{51}}}%
-\newcommand{\xmark}{\textcolor{green}{\ding{55}}}%
+%\newcommand{\star}{\textcolor{yellow}{\ding{72}}}%
 \newcommand{\mtag}[1]{% \tag{<name>}
 \mathchardef\mhyphen="2D % Define a "math hyphen"
 \ensuremath{\langle{}#1\rangle{}}}
@@ -78,7 +79,7 @@
   \item \textbf{Structured prediction} is breaking down prediction of a large
     structure into subproblems and using results from earlier stages in later
     stages (like dynamic programming). For POS tagging the simplest approach is
-    to tag left to right.
+    break the problem down to per-token tagging and then tag left to right.
 
   \item \textbf{The perceptron} stores a sparse linear vector of (feature,
     weight) pairs.  Observations are scored by taking the dot product of their
@@ -124,7 +125,7 @@ frankier: Been coding like a maniac
 frankier: I've ended up creating a sort of lisp in XML
 based on a stack VM
 
-spectie: O\_\_\_O
+spectie: O___O
 \end{verbatim}
 
 \end{frame}
@@ -137,23 +138,25 @@ spectie: O\_\_\_O
 \end{frame}
 
 \begin{frame}
-\frametitle{A DSL 3/3}
+\frametitle{A DSL for features 3/3}
 \begin{itemize}
 
   \item Greenspun's tenth rule of programming: Any sufficiently complicated C
     or Fortran program contains an ad hoc, informally-specified, bug-ridden,
     slow implementation of half of Common Lisp.
 
-  \item So why try to avoid it?
+  \item Neither easy nor desirable to try and define every possible useful
+    feature up front.
 
-  \item Neither easy (for me) nor desirable to try and define every possible
-    useful feature up front.
+  \item Seems likely that any feature language will be subject to feature creep
+    (pun intended) so an expression language is a reasonable starting point.
 
-  \item Bytecode interpreter design is fasterand more modular than a tree
+  \item Bytecode interpreter design is faster and more modular than a tree
     walking interpreter and is usually the same or less code. Also it's easy to
     serialise.
 
-  \item Hopefully empowers language authors more than it confuses them.
+  \item Hopefully the flexibility empowers language authors more than it
+    confuses them. (In the worst case people can just copy-paste.)
 
 \end{itemize}
 \end{frame}
@@ -205,7 +208,7 @@ spectie: O\_\_\_O
 \end{frame}
 
 \begin{frame}
-\frametitle{Results}
+\frametitle{Results for Kazakh}
 Results!
 \end{frame}
 
@@ -228,14 +231,22 @@ Results!
 \frametitle{References}
 \begin{itemize}
 
-  \item Chinese segmentation. STAR Most helpful and similar to this implementation.
+  \item[\raisebox{0.05cm}{\textcolor{yellow}{$\bigstar$}}]
+    \textit{\href{http://www.mitpressjournals.org/doi/pdf/10.1162/coli_a_00037}{Syntactic
+    Processing using the Generalized Perceptron and Beam Search}}. Zhang \&
+    Clark 2011. Includes general formulation and multiple worked examples. Most
+    of the implementation is based on this paper.
 
-  \item Original Collins perceptron paper.
+  \item
+    \textit{\href{http://www.cs.columbia.edu/~mcollins/papers/tagperc.pdf}{Discriminative
+    Training Methods for Hidden Markov Models}}. Michael Collins 2002.
+    Original Collins perceptron paper.
 
-  \item \textit{\href{https://spacy.io/blog/part-of-speech-pos-tagger-in-python}{A Good Part-of-Speech Tagger in about 200 Lines of Python}},
-    Matthew Honnibal, Blog Post.
-    Plus: Easily understandable reference implementation. Minus: Formulation
-    varies from rest of the literature.
+  \item
+    \textit{\href{https://spacy.io/blog/part-of-speech-pos-tagger-in-python}{A
+    Good Part-of-Speech Tagger in about 200 Lines of Python}}, Matthew Honnibal
+    (blog post).  Plus: Easily understandable reference implementation. Minus:
+    Formulation varies from rest of the literature.
 
 \end{itemize}
 \end{frame}
