@@ -1,6 +1,5 @@
 \documentclass{beamer}
 
-\usepackage[dvipsnames]{xcolor}
 \usepackage[main=english,finnish]{babel}
 \usepackage{cmbright}
 \usepackage{fontspec}
@@ -174,13 +173,10 @@ spectie: O___O
 </def-global>
 
 <def-global as="is_dmorph">
-  <streq val="+">
-    <slice end="1">
-      <ex-lemma>
-        <ex-wordoid><wrdaddr /></ex-wordoid>
-      </ex-lemma>
-    </slice>
-  </streq>
+  <neq>
+    <int val="0" />
+    <wrdidx />
+  </neq>
 </def-global>
 \end{verbatim}
 }
@@ -191,6 +187,11 @@ spectie: O___O
 \frametitle{Example of DSL 2/2}
 {\scriptsize
 \begin{verbatim}
+<feat>
+  <pred><var name="is_headword" /></pred>
+  <out><var name="major_tag_0" /></out>
+</feat>
+
 <feat>
   <pred><var name="is_headword" /></pred>
   <out><var name="lemma_0" /></out>
@@ -208,8 +209,45 @@ spectie: O___O
 \end{frame}
 
 \begin{frame}
-\frametitle{Results for Kazakh}
-Results!
+\frametitle{Results for Kazakh 1/2}
+
+Sample mean + std-dev from 10-fold cross validation.
+
+\begin{table}
+\begin{tabular}{ l | l l }
+  & Acc & Adj acc \\
+  0-gram & $72.08\%$ & $77.72\%$  \\
+  CG->0-gram & $81.56\%$ & $ 87.95\%$ \\
+  Best unigram & $82.45\pm3.80\%$ & $88.99\pm2.83\%$ \\
+  CG->Best unigram & $84.71\pm3.54\%$ & $91.43\pm2.26\%$
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Results for Kazakh 2/2}
+
+\begin{table}
+\begin{tabular}{ l | l }
+  No lt-toolbox & Acc\\
+  Uni mtx & $91.08\pm2.13\%$\\
+  CG->Uni mtx & $87.47\pm3.10$ \\
+  Kaz mtx & $91.41\pm2.08\%$ \\
+  CG->Kaz mtx & $87.68\pm3.11\%$
+\end{tabular}
+\end{table}
+
+\begin{table}
+\begin{tabular}{ l | l l }
+  lt-toolbox & Acc & Adj acc\\
+  Uni mtx & $82.87\pm3.45\%$ & $89.45\pm2.46\%$ \\
+  CG->Uni mtx & $84.53\pm3.59\%$ & $91.23\pm2.40\%$\\
+  Kaz mtx & $83.01\pm3.78\%$ & $89.58\pm2.70\%$ \\
+  CG->Kaz mtx & $84.57\pm3.57\%$ & $91.27\pm2.37\%$
+\end{tabular}
+\end{table}
+
 \end{frame}
 
 \begin{frame}
@@ -223,6 +261,11 @@ Results!
 
   \item Allow easy generation of multiple prefix/postfix features with special
     construct
+
+  \item Improve handling of sentinels and ability to stop a feature firing when
+    data isn't available.
+
+  \item Allow reusage of coarse tags from tsx as well as provide some kind of similar tag coarsening
 
 \end{itemize}
 \end{frame}
